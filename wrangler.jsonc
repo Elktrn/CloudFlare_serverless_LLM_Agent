@@ -1,0 +1,5 @@
+{
+	    "name": "LLM_Itinerary_Generator",
+	    "compatibility_date": "2025-08-07",
+	    "main": "index.ts"
+	  }
