@@ -4,7 +4,7 @@ import json
 def on_fetch(request, env):
     print(env)
     if request.method == "POST":
-        openai_api_key = env.openai_api_key
+        openai_api_key = env.openaikey
         try:
             # Read the JSON payload
             payload = request.json()
