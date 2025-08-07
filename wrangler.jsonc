@@ -1,5 +1,8 @@
 {
-	    "name": "LLM_Itinerary_Generator",
-	    "compatibility_date": "2025-08-07",
-	    "main": "index.ts"
-	  }
+  "name": "llm_itinerary_generator",
+  "main": "main.py",
+  "compatibility_flags": [
+    "python_workers"
+  ],
+  "compatibility_date": "2024-03-20"
+}

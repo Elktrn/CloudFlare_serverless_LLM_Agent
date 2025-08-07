@@ -1,1 +1,4 @@
-print("working great...")
+from workers import Response
+
+def on_fetch(request):
+    return Response("Hello World!")
