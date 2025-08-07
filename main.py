@@ -13,7 +13,7 @@ def on_fetch(request):
             payload = request.json()
 
             # Extract variables with defaults
-            name = 'xx'#payload.get("name", "Unknown")
+            name = 'xxx'#payload.get("name", "Unknown")
 
             # Example processing
             processed_data = {
