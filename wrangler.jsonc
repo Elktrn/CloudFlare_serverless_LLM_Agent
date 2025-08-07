@@ -1,8 +1,18 @@
 {
   "name": "llm_itinerary_generator",
   "main": "main.py",
-  "compatibility_flags": [
+  "compatibility_date": "2025-08-07",
+    "compatibility_flags": [
     "python_workers"
   ],
-  "compatibility_date": "2024-03-20"
+  "vars": {
+    "openaikey": "default-value"
+  },
+  "env": {
+    "production": {
+      "vars": {
+        "openaikey": "production-value"
+      }
+    }
+  }
 }
