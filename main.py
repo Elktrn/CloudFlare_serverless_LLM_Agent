@@ -10,7 +10,7 @@ def on_fetch(request):
     if request.method == "POST":
         try:
             # Read the JSON payload
-            payload = request.json()
+            payload = "cyx"
 
             # Extract variables with defaults
             name = 'xxx'#payload.get("name", "Unknown")
