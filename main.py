@@ -4,9 +4,9 @@ import json
 async def on_fetch(request,env):
     if request.method == "POST":
         try:
-            # Read the JSON payload
-            payload = await request.json()
-            name =payload.get("name", "Unknown")#env.openaikey
+            #env.openaikey
+            name = (await request.json()).name
+            # name =payload.get("name", "Unknown")
             processed_data = {
                 "greeting": f"Hello, {name}!"}
             return Response(json.dumps(processed_data), status=200)
