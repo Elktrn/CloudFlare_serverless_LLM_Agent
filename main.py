@@ -24,13 +24,13 @@ async def on_fetch(request,env):
                         "greeting": f"dd at async, {duration_days}!"
                     }
                     # Could store result in env.KV here
-                    console.log('Processed:', processed_data)
+                    print('Processed:', processed_data)
                 except Exception as e:
-                    console.log('Async error:', e)
+                    print('Async error:', e)
 
             asyncio.create_task(process_async())
 
-            return Response(json.dumps(immediate_response), status=200)
+            return Response(json.dumps(immediate_response), status=202)
         except Exception as e:
             error_data = {"error": f"Failed to process POST request: {str(e)}"}
             return Response(json.dumps(error_data), status=400)
