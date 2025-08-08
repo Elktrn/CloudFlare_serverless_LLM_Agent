@@ -6,7 +6,7 @@ def on_fetch(request):
         try:
             # Read the JSON payload
             payload = request.json()
-            name ="kkk"# payload.get("name", "Unknown")
+            name =payload['name']
             processed_data = {
                 "greeting": f"Hello, {name}!"}
             return Response(json.dumps(processed_data), status=200)
