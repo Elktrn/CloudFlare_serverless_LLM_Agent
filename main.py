@@ -41,45 +41,9 @@ async def on_fetch(request,env):
                         print('Unsuccessful job_{jobId} injection to kv:', e)
 
                 DB_register_job_()
-
-                async def generate_itinerary_llm():
-                    # The injected job into the db is processed async by this function
-                    try:
-                        #env.openaikey
-                        jsond = await env.itinerarykv.get(f"job_{jobId}")
-                        parsed_data = json.loads(jsond)
-                        retries=0
-                        try :
-                            # llm.get_message(input_text,prompt)
-                            itinerary= [{"day": 1,
-                                    "theme": "Historical Paris",
-                                    "activities": [{
-                                        "time": "Morning",
-                                        "description": "Visit the Louvre Museum. Pre-book tickets to avoid queues.",
-                                        "location": "Louvre Museum"},
-                                        {
-                                        "time": "Afternoon",
-                                        "description": "Explore the Notre-Dame Cathedral area and walk along the Seine.",
-                                        "location": "Île de la Cité"},
-                                        {
-                                        "time": "Evening",
-                                        "description": "Dinner in the Latin Quarter.",
-                                        "location": "Latin Quarter"}]}]
-                            parsed_data["itinerary"]=itinerary
-                            parsed_data["completedAt"]='some timestamp'
-                            parsed_data["status"]="completed"
-
-                        except Exception as e:
-                            parsed_data["status"]="failed"
-                            parsed_data["error"]=str(e)
-                            
-                        json_data = json.dumps(parsed_data)
-                        await env.itinerarykv.put(f"job_{jobId}", json_data)
-
-                    except Exception as e:
-                        print('Async generate_itinerary_llm fundumental error:', e)
                     
-                asyncio.create_task(generate_itinerary_llm())
+                asyncio.create_task(generate_itinerary_llm(env,jobId))
+
                 jsond = await env.itinerarykv.get(f"job_{jobId}")
                 parsed_data = json.loads(jsond)
                 return Response(json.dumps(parsed_data), status=202)
@@ -91,3 +55,45 @@ async def on_fetch(request,env):
             "error": "Failed to process Non-POST request"
         }
         return Response(json.dumps(data), status=400)
+    
+async def generate_itinerary_llm(env,jobId):
+    # The injected job into the db is processed async by this function
+    try:
+        #env.openaikey
+        jsond = await env.itinerarykv.get(f"job_{jobId}")
+        parsed_data = json.loads(jsond)
+        retries=0
+        try :
+            # llm.get_message(input_text,prompt)
+            itinerary= [{"day": 1,
+                    "theme": "Historical Paris",
+                    "activities": [{
+                        "time": "Morning",
+                        "description": "Visit the Louvre Museum. Pre-book tickets to avoid queues.",
+                        "location": "Louvre Museum"},
+                        {
+                        "time": "Afternoon",
+                        "description": "Explore the Notre-Dame Cathedral area and walk along the Seine.",
+                        "location": "Île de la Cité"},
+                        {
+                        "time": "Evening",
+                        "description": "Dinner in the Latin Quarter.",
+                        "location": "Latin Quarter"}]}]
+            parsed_data["itinerary"]=itinerary
+            parsed_data["completedAt"]=datetime.now()
+            parsed_data["status"]="completed"
+
+        except Exception as e:
+            parsed_data["status"]="failed"
+            parsed_data["error"]=str(e)
+            
+        json_data = json.dumps(parsed_data)
+        await env.itinerarykv.put(f"job_{jobId}", json_data)
+
+    except Exception as e:
+        parsed_data["status"]="failed"
+        parsed_data["error"]=str(e)
+            
+        json_data = json.dumps(parsed_data)
+        await env.itinerarykv.put(f"job_{jobId}", json_data)
+        print('Async generate_itinerary_llm fundumental error:', e)
