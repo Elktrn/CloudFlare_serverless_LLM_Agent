@@ -2,7 +2,6 @@ from workers import Response
 import json
 import uuid;
 import asyncio
-from google.cloud import firestore
 async def on_fetch(request,env):
     if request.method == "POST":
         try:
