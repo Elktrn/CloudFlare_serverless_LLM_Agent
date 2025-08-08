@@ -3,7 +3,7 @@ import json
 import uuid;
 import asyncio
 import time
-import openai
+# import openai
 import datetime
 
 async def on_fetch(request,env):
