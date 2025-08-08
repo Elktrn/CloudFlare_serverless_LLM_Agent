@@ -15,17 +15,15 @@ async def on_fetch(request,env):
                 "status": "accepted",
                 "duration days":duration_days
             }
-            # processed_data = {
-            #     "greeting": f"DurationDays, {name}!"}
+        
             async def process_async():
                 try:
                     processed_data = {
                         "jobId": jobId,
                         "greeting": f"dd at async, {duration_days}!"
                     }
-                    # db = firestore.Client.from_service_account_json(env.FIRESTORE_CREDENTIALS)
-                    # db.collection('results').document(jobId).set(processed_data)
-                    # Could store result in env.KV here
+                    json_data = json.dumps(processed_data)
+                    await env.itinerarykv.put(f"job_{jobId}", json_data)
                     print('Processed:', processed_data)
                 except Exception as e:
                     print('Async error:', e)
