@@ -2,11 +2,11 @@ from workers import Response
 import json
 import uuid;
 import asyncio
-
+from pyodide.ffi import to_py
 async def on_fetch(request,env):
     if request.method == "POST":
         try:
-            payload=await request.json()
+            payload=to_py(await request.json())
             if "jobId" in payload:
                 # If the request of user contains jobID it means it has been already submitted 
                 # and the user wants the result of the job
