@@ -12,8 +12,8 @@
   },
   "kv_namespaces": [
     {
-      "binding": "KVNAMESPACE",
-      "id": "itinerarykv" 
+      "binding": "itinerarykv",
+      "id": "aee80e2ef1a84d1ebc752e3bbc1071d3" 
     }
   ]
 }
