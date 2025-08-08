@@ -2,6 +2,8 @@ from workers import Response
 import json
 import uuid;
 import asyncio
+import time
+import datetime
 
 async def on_fetch(request,env):
     if request.method == "POST":
@@ -78,7 +80,7 @@ async def generate_itinerary_llm(env,jobId):
                         "description": "Dinner in the Latin Quarter.",
                         "location": "Latin Quarter"}]}]
             parsed_data["itinerary"]=itinerary
-            parsed_data["completedAt"]="sometime"
+            parsed_data["completedAt"]="null"
             parsed_data["status"]="completed"
 
         except Exception as e:
