@@ -3,7 +3,7 @@ import json
 import uuid;
 import asyncio
 import time
-# import openai
+import httpx
 import datetime
 
 async def on_fetch(request,env):
@@ -30,7 +30,7 @@ async def on_fetch(request,env):
                             "destination":pyaload.destination,
                             "durationDays": pyaload.durationDays,
                             "status":"processing",
-                            "createdAt":datetime.datetime.utcnow().isoformat(),
+                            "createdAt":"null",
                             "completedAt":"null",
                             "itinerary":"null",
                             "error":'null'
@@ -68,15 +68,15 @@ async def on_fetch(request,env):
                                             "description": "Dinner in the Latin Quarter.",
                                             "location": "Latin Quarter"}]}]
                                 parsed_data["itinerary"]=itinerary
-                                parsed_data["completedAt"]=datetime.datetime.utcnow().isoformat()
+                                parsed_data["completedAt"]='some timestamp'
                                 parsed_data["status"]="completed"
 
-                            except (openai.error.RateLimitError, openai.error.APIConnectionError, openai.error.ServiceUnavailableError, openai.error.Timeout) as e:
-                                print(f"Transient error on attempt {retries+1}: {e}")
-                                wait_time = 2 ** retries * 60  # Exponential backoff: 1 min, 2 min, 4 min
-                                print(f"Waiting for {wait_time} seconds before retrying...")
-                                time.sleep(wait_time)
-                                retries+=1
+                            # except (openai.error.RateLimitError, openai.error.APIConnectionError, openai.error.ServiceUnavailableError, openai.error.Timeout) as e:
+                            #     print(f"Transient error on attempt {retries+1}: {e}")
+                            #     wait_time = 2 ** retries * 60  # Exponential backoff: 1 min, 2 min, 4 min
+                            #     print(f"Waiting for {wait_time} seconds before retrying...")
+                            #     time.sleep(wait_time)
+                            #     retries+=1
 
                             except Exception as e:
                                 parsed_data["status"]="failed"
