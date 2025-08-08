@@ -1,8 +1,8 @@
 {
   "name": "llm_itinerary_generator",
   "main": "main.py",
-    "compatibility_flags": [
+  "compatibility_flags": [
     "python_workers"
   ],
-    "compatibility_date": "2025-08-07"
+  "compatibility_date": "2024-03-20"
 }
