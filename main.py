@@ -6,11 +6,14 @@ import asyncio
 async def on_fetch(request,env):
     if request.method == "POST":
         try:
+            # If the request of user contains jobID it means it has been already submitted 
+            # and the user wants the result of the job
             job_Id=(await request.json()).jobId
             jsond = await env.itinerarykv.get(f"job_{job_Id}")
             parsed_data = json.loads(jsond)
             return Response(json.dumps(parsed_data), status=202)
         except Exception as e:
+            # So no jobId found in the input json therefore user is trying to register a job for llm
             try:
                 
                 pyaload = await request.json()
@@ -23,7 +26,9 @@ async def on_fetch(request,env):
                     "duration days":duration_days
                 }
             
-                async def process_async():
+                def DB_register_job_():
+                    # We want to inject the job to the database (KV of CouldFlare in here)
+                    #  to be processsed async by the LLM generation function
                     try:
                         processed_data = {
                             "jobId": jobId,
@@ -31,14 +36,15 @@ async def on_fetch(request,env):
                             "status":"processing"
                         }
                         json_data = json.dumps(processed_data)
-                        await env.itinerarykv.put(f"job_{jobId}", json_data)
+                        env.itinerarykv.put(f"job_{jobId}", json_data)
                         print('Successful job_{jobId} injection to kv', processed_data)
                     except Exception as e:
                         print('Unsuccessful job_{jobId} injection to kv:', e)
 
-                await process_async()
+                DB_register_job_()
 
                 async def generate_itinerary_llm():
+                    # The injected job into the db is processed async by this function
                     try:
                         #env.openaikey
                         jsond = await env.itinerarykv.get(f"job_{jobId}")
