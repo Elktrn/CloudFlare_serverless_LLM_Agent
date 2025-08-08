@@ -5,17 +5,17 @@ import asyncio
 
 async def on_fetch(request,env):
     if request.method == "POST":
+        pyaload=await request.json()
         try:
             # If the request of user contains jobID it means it has been already submitted 
             # and the user wants the result of the job
-            job_Id=(await request.json()).jobId
+            job_Id=pyaload.jobId
             jsond = await env.itinerarykv.get(f"job_{job_Id}")
             parsed_data = json.loads(jsond)
             return Response(json.dumps(parsed_data), status=202)
         except Exception as e:
             # So no jobId found in the input json therefore user is trying to register a job for llm
             try:
-                pyaload = await request.json()
                 duration_days =pyaload.durationDays
                 
                 jobId = str(uuid.uuid4())
