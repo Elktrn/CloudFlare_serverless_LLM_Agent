@@ -29,7 +29,7 @@ async def on_fetch(request,env):
                             "destination":pyaload.destination,
                             "durationDays": pyaload.durationDays,
                             "status":"processing",
-                            "createdAt":"null",
+                            "createdAt":str(datetime.datetime.now()),
                             "completedAt":"null",
                             "itinerary":"null",
                             "error":'null'
@@ -80,7 +80,7 @@ async def generate_itinerary_llm(env,jobId):
                         "description": "Dinner in the Latin Quarter.",
                         "location": "Latin Quarter"}]}]
             parsed_data["itinerary"]=itinerary
-            parsed_data["completedAt"]="null"
+            parsed_data["completedAt"]=str(datetime.datetime.now())
             parsed_data["status"]="completed"
 
         except Exception as e:
