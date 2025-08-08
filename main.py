@@ -15,7 +15,6 @@ async def on_fetch(request,env):
         except Exception as e:
             # So no jobId found in the input json therefore user is trying to register a job for llm
             try:
-                
                 pyaload = await request.json()
                 duration_days =pyaload.durationDays
                 
