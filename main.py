@@ -2,6 +2,9 @@ from workers import Response
 import json
 import uuid;
 import asyncio
+import time
+import openai
+import datetime
 
 async def on_fetch(request,env):
     if request.method == "POST":
@@ -16,14 +19,7 @@ async def on_fetch(request,env):
         except Exception as e:
             # So no jobId found in the input json therefore user is trying to register a job for llm
             try:
-                duration_days =pyaload.durationDays
-                
                 jobId = str(uuid.uuid4())
-                immediate_response = {
-                    "jobId": jobId,
-                    "status": "accepted",
-                    "duration days":duration_days
-                }
             
                 def DB_register_job_():
                     # We want to inject the job to the database (KV of CouldFlare in here)
@@ -31,8 +27,13 @@ async def on_fetch(request,env):
                     try:
                         processed_data = {
                             "jobId": jobId,
-                            "greeting": f"dd at async, {duration_days}!",
-                            "status":"processing"
+                            "destination":pyaload.destination,
+                            "durationDays": pyaload.durationDays,
+                            "status":"processing",
+                            "createdAt":datetime.datetime.utcnow().isoformat(),
+                            "completedAt":"null",
+                            "itinerary":"null",
+                            "error":'null'
                         }
                         json_data = json.dumps(processed_data)
                         env.itinerarykv.put(f"job_{jobId}", json_data)
@@ -48,10 +49,42 @@ async def on_fetch(request,env):
                         #env.openaikey
                         jsond = await env.itinerarykv.get(f"job_{jobId}")
                         parsed_data = json.loads(jsond)
-                        parsed_data["status"]="llmgenerated"
+                        retries=0
+                        while retries<5:
+                            try :
+                                # llm.get_message(input_text,prompt)
+                                itinerary= [{"day": 1,
+                                        "theme": "Historical Paris",
+                                        "activities": [{
+                                            "time": "Morning",
+                                            "description": "Visit the Louvre Museum. Pre-book tickets to avoid queues.",
+                                            "location": "Louvre Museum"},
+                                            {
+                                            "time": "Afternoon",
+                                            "description": "Explore the Notre-Dame Cathedral area and walk along the Seine.",
+                                            "location": "Île de la Cité"},
+                                            {
+                                            "time": "Evening",
+                                            "description": "Dinner in the Latin Quarter.",
+                                            "location": "Latin Quarter"}]}]
+                                parsed_data["itinerary"]=itinerary
+                                parsed_data["completedAt"]=datetime.datetime.utcnow().isoformat()
+                                parsed_data["status"]="completed"
+
+                            except (openai.error.RateLimitError, openai.error.APIConnectionError, openai.error.ServiceUnavailableError, openai.error.Timeout) as e:
+                                print(f"Transient error on attempt {retries+1}: {e}")
+                                wait_time = 2 ** retries * 60  # Exponential backoff: 1 min, 2 min, 4 min
+                                print(f"Waiting for {wait_time} seconds before retrying...")
+                                time.sleep(wait_time)
+                                retries+=1
+
+                            except Exception as e:
+                                parsed_data["status"]="failed"
+                                parsed_data["error"]=str(e)
+                                raise
                         json_data = json.dumps(parsed_data)
                         await env.itinerarykv.put(f"job_{jobId}", json_data)
-                        print('Processed:', parsed_data)
+
                     except Exception as e:
                         print('Async error:', e)
                     
