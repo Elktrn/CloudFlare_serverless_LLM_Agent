@@ -29,8 +29,9 @@ async def on_fetch(request,env):
                     print('Async error:', e)
 
             asyncio.create_task(process_async())
-
-            return Response(json.dumps(immediate_response), status=202)
+            jsond = await env.itinerarykv.get(f"job_{jobId}")
+            parsed_data = json.loads(jsond)
+            return Response(json.dumps(parsed_data), status=202)
         except Exception as e:
             error_data = {"error": f"Failed to process POST request: {str(e)}"}
             return Response(json.dumps(error_data), status=400)
