@@ -1,12 +1,12 @@
 from workers import Response
 import json
 
-def on_fetch(request):
+async def on_fetch(request):
     if request.method == "POST":
         try:
             # Read the JSON payload
-            payload = request.json()
-            name = payload.get("name", "Unknown")
+            payload = await request.json()
+            name = await payload.get("name", "Unknown")
             processed_data = {
                 "greeting": f"Hello, {name}!"}
             return Response(json.dumps(processed_data), status=200)
