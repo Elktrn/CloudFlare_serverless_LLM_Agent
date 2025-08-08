@@ -12,8 +12,8 @@
   },
   "kv_namespaces": [
     {
-      "binding": "KVNAMESPACE", // The name used in your Worker code
-      "id": "itinerarykv" // Replace with the actual KV namespace ID from Cloudflare Dashboard
+      "binding": "KVNAMESPACE",
+      "id": "itinerarykv" 
     }
   ]
 }
