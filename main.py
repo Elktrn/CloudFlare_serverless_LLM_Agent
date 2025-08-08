@@ -43,7 +43,7 @@ async def on_fetch(request,env):
                 DB_register_job_()
                     
                 asyncio.create_task(generate_itinerary_llm(env,jobId))
-                
+
                 jsond = await env.itinerarykv.get(f"job_{jobId}")
                 parsed_data = json.loads(jsond)
                 return Response(json.dumps(parsed_data), status=202)
@@ -91,4 +91,9 @@ async def generate_itinerary_llm(env,jobId):
         await env.itinerarykv.put(f"job_{jobId}", json_data)
 
     except Exception as e:
+        parsed_data["status"]="failed"
+        parsed_data["error"]=str(e)
+            
+        json_data = json.dumps(parsed_data)
+        await env.itinerarykv.put(f"job_{jobId}", json_data)
         print('Async generate_itinerary_llm fundumental error:', e)
