@@ -9,5 +9,11 @@
     "logs": {
       "enabled": true
     }
-  }
+  },
+  "kv_namespaces": [
+    {
+      "binding": "MY_KV_NAMESPACE", // The name used in your Worker code
+      "id": "itinerary-kv" // Replace with the actual KV namespace ID from Cloudflare Dashboard
+    }
+  ]
 }

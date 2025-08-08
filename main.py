@@ -2,6 +2,7 @@ from workers import Response
 import json
 import uuid;
 import asyncio
+from google.cloud import firestore
 async def on_fetch(request,env):
     if request.method == "POST":
         try:
@@ -23,6 +24,8 @@ async def on_fetch(request,env):
                         "jobId": jobId,
                         "greeting": f"dd at async, {duration_days}!"
                     }
+                    # db = firestore.Client.from_service_account_json(env.FIRESTORE_CREDENTIALS)
+                    # db.collection('results').document(jobId).set(processed_data)
                     # Could store result in env.KV here
                     print('Processed:', processed_data)
                 except Exception as e:
