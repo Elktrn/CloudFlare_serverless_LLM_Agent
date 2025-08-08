@@ -2,6 +2,7 @@ from workers import Response
 import json
 import uuid;
 import asyncio
+
 async def on_fetch(request,env):
     if request.method == "POST":
         try:
@@ -27,8 +28,10 @@ async def on_fetch(request,env):
                     print('Processed:', processed_data)
                 except Exception as e:
                     print('Async error:', e)
-
-            asyncio.create_task(process_async())
+            ##ff        
+            json_data = json.dumps(immediate_response)
+            await env.itinerarykv.put(f"job_{jobId}", json_data)
+            # asyncio.create_task(process_async())
             jsond = await env.itinerarykv.get(f"job_{jobId}")
             parsed_data = json.loads(jsond)
             return Response(json.dumps(parsed_data), status=202)
