@@ -86,7 +86,7 @@ async def on_fetch(request,env):
                         await env.itinerarykv.put(f"job_{jobId}", json_data)
 
                     except Exception as e:
-                        print('Async error:', e)
+                        print('Async generate_itinerary_llm fundumental error:', e)
                     
                 asyncio.create_task(generate_itinerary_llm())
                 jsond = await env.itinerarykv.get(f"job_{jobId}")
