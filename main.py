@@ -1,12 +1,12 @@
 from workers import Response
 import json
 
-async def on_fetch(request):
+async def on_fetch(request,env):
     if request.method == "POST":
         try:
             # Read the JSON payload
-            payload = await request.json()
-            name = await payload.get("name", "Unknown")
+            # payload = await request.json()
+            name =env.openaikey# await payload.get("name", "Unknown")
             processed_data = {
                 "greeting": f"Hello, {name}!"}
             return Response(json.dumps(processed_data), status=200)
