@@ -5,8 +5,8 @@ async def on_fetch(request,env):
     if request.method == "POST":
         try:
             # Read the JSON payload
-            # payload = await request.json()
-            name =env.openaikey# await payload.get("name", "Unknown")
+            payload = await request.json()
+            name =payload.get("name", "Unknown")#env.openaikey
             processed_data = {
                 "greeting": f"Hello, {name}!"}
             return Response(json.dumps(processed_data), status=200)
