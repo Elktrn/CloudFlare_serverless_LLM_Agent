@@ -16,7 +16,7 @@ async def on_fetch(request, env):
         except:
             # No jobId, so register a new job
             try:
-                job_id = await str(uuid.uuid4())
+                job_id = 'twert'# await str(uuid.uuid4())
                 
                 # Register job in KV storage
                 processed_data = {
@@ -41,7 +41,7 @@ async def on_fetch(request, env):
                 #         method="POST",
                 #         body={"jobId": job_id,"iten":str(ite)})
 
-                return Response(json.dumps(processed_data), status=202)
+                return Response(json.dumps({"status":"done"}), status=202)
             except Exception as e:
                 error_data = {"error": f"Failed to process POST request: {str(e)}"}
                 return Response(json.dumps(error_data), status=400)
