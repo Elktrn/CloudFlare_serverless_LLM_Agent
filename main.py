@@ -31,10 +31,15 @@ async def on_fetch(request, env):
                 }
                 json_data = json.dumps(processed_data)
                 await env.itinerarykv.put(f"job_{job_id}", json_data)
+                
+                ite=[]
+                for i in range(1,payload.get("durationDays")+1):
+                    ite.append({"day":i,"theme":"FILL","activities":[{"time":"morning","description":"FILL","location":"FILL"},{"time":"afternoon","description":"FILL","location":"FILL"},{"time":"evening","description":"FILL","location":"FILL"}]})
+
                 env.fetch(
                         "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
                         method="POST",
-                        body={"jobId": job_id})
+                        body=json.dumps(ite))
 
                 return Response(json.dumps(processed_data), status=202)
             except Exception as e:
