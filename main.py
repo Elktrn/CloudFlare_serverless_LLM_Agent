@@ -32,9 +32,9 @@ async def on_fetch(request, env):
                 # json_data =await json.dumps(processed_data)
                 # await env.itinerarykv.put(f"job_{job_id}", json_data)
                 
-                # ite=[]
-                # for i in range(1,payload.durationDays+1):
-                #     ite.append({"day":i,"theme":"FILL","activities":[{"time":"morning","description":"FILL","location":"FILL"},{"time":"afternoon","description":"FILL","location":"FILL"},{"time":"evening","description":"FILL","location":"FILL"}]})
+                ite=[]
+                for i in range(1,payload.durationDays+1):
+                    ite.append({"day":i,"theme":"FILL","activities":[{"time":"morning","description":"FILL","location":"FILL"},{"time":"afternoon","description":"FILL","location":"FILL"},{"time":"evening","description":"FILL","location":"FILL"}]})
 
                 # env.fetch(
                 #         "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
