@@ -13,22 +13,22 @@ async def on_fetch(request, env):
             jsond = await env.itinerarykv.get(f"job_{job_id}")
             parsed_data =await json.loads(jsond)
             return Response(json.dumps(parsed_data), status=202)
-        except:
+        except Exception as e:
             # No jobId, so register a new job
             try:
                 job_id = 'twert'# await str(uuid.uuid4())
                 
                 # Register job in KV storage
-                processed_data = {
-                    "jobId": job_id,
-                    "destination": payload.destination,
-                    "durationDays": payload.durationDays,
-                    "status": "pending",
-                    "createdAt": str(datetime.datetime.now()),
-                    "completedAt": "null",
-                    "itinerary": "null",
-                    "error": "null"
-                }
+                # processed_data = {
+                #     "jobId": job_id,
+                #     "destination": payload.destination,
+                #     "durationDays": payload.durationDays,
+                #     "status": "pending",
+                #     "createdAt": str(datetime.datetime.now()),
+                #     "completedAt": "null",
+                #     "itinerary": "null",
+                #     "error": "null"
+                # }
                 # json_data =await json.dumps(processed_data)
                 # await env.itinerarykv.put(f"job_{job_id}", json_data)
                 
