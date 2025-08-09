@@ -29,8 +29,8 @@ async def on_fetch(request, env):
                     "itinerary": "null",
                     "error": "null"
                 }
-                # json_data =await json.dumps(processed_data)
-                # await env.itinerarykv.put(f"job_{job_id}", json_data)
+                json_data =await json.dumps(processed_data)
+                await env.itinerarykv.put(f"job_{job_id}", json_data)
                 
                 ite=[]
                 # for i in range(1,payload.durationDays+1):
