@@ -39,7 +39,7 @@ async def on_fetch(request, env):
                 env.fetch(
                         "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
                         method="POST",
-                        body={"jobId": job_id,"iten":ite})
+                        body={"jobId": job_id,"iten":str(ite)})
 
                 return Response(json.dumps(processed_data), status=202)
             except Exception as e:
