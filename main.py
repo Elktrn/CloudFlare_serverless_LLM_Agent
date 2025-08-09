@@ -16,7 +16,7 @@ async def on_fetch(request, env):
         else:
             # No jobId, so register a new job
             try:
-                job_id = await str(uuid.uuid4())
+                job_id = 'twert'# await str(uuid.uuid4())
                 
                 # Register job in KV storage
                 processed_data = {
@@ -34,7 +34,7 @@ async def on_fetch(request, env):
                 
                 # ite=[]
                 # for i in range(1,payload.durationDays+1):
-                #     ite.append({"day":i,"theme":"FILL","activities":[{"time":"morning","description":"FILL","location":"FILL"},{"time":"afternoon","description":"FILL","location":"FILL"},{"time":"evening","description":"FILL","location":"FILL"}]})
+                    # ite.append({"day":i,"theme":"FILL","activities":[{"time":"morning","description":"FILL","location":"FILL"},{"time":"afternoon","description":"FILL","location":"FILL"},{"time":"evening","description":"FILL","location":"FILL"}]})
 
                 # env.fetch(
                 #         "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
