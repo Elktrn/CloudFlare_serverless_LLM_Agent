@@ -21,8 +21,8 @@ async def on_fetch(request, env):
                 # Register job in KV storage
                 processed_data = {
                     "jobId": job_id,
-                    "destination": payload.get("destination"),
-                    "durationDays": payload.get("durationDays"),
+                    "destination": payload.destination,
+                    "durationDays": payload.durationDays,
                     "status": "pending",
                     "createdAt": str(datetime.datetime.now()),
                     "completedAt": "null",
