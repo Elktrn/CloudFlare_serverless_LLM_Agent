@@ -7,13 +7,13 @@ import aiohttp
 async def on_fetch(request, env):
     if request.method == "POST":
         payload = await request.json()
-        try:
+        if "jobId" in payload: 
             # Check if the request contains a jobId (user is checking job status)
             job_id = payload.jobId
             jsond = await env.itinerarykv.get(f"job_{job_id}")
             parsed_data =await json.loads(jsond)
             return Response(json.dumps(parsed_data), status=202)
-        except Exception as e:
+        else:
             # No jobId, so register a new job
             try:
                 job_id = 'twert'# await str(uuid.uuid4())
