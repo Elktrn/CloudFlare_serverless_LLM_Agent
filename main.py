@@ -11,12 +11,12 @@ async def on_fetch(request, env):
             # Check if the request contains a jobId (user is checking job status)
             job_id = payload.jobId
             jsond = await env.itinerarykv.get(f"job_{job_id}")
-            parsed_data = json.loads(jsond)
+            parsed_data =await json.loads(jsond)
             return Response(json.dumps(parsed_data), status=202)
         except:
             # No jobId, so register a new job
             try:
-                job_id = str(uuid.uuid4())
+                job_id = await str(uuid.uuid4())
                 
                 # Register job in KV storage
                 processed_data = {
@@ -29,7 +29,7 @@ async def on_fetch(request, env):
                     "itinerary": "null",
                     "error": "null"
                 }
-                json_data = json.dumps(processed_data)
+                json_data =await json.dumps(processed_data)
                 await env.itinerarykv.put(f"job_{job_id}", json_data)
                 
                 ite=[]
@@ -47,4 +47,4 @@ async def on_fetch(request, env):
                 return Response(json.dumps(error_data), status=400)
     else:
         data = {"error": "Failed to process non-POST request"}
-        return Response(json.dumps(data), status=400)
+        return Response(json.dumps(data), status=500)
