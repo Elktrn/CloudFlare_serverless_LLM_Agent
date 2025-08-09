@@ -16,7 +16,7 @@ async def on_fetch(request, env):
         else:
             # No jobId, so register a new job
             try:
-                job_id = 'twert'# await str(uuid.uuid4())
+                job_id = await str(uuid.uuid4())
                 
                 # Register job in KV storage
                 processed_data = {
