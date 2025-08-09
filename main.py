@@ -7,7 +7,7 @@ import aiohttp
 async def on_fetch(request, env):
     if request.method == "POST":
         payload = await request.json()
-        if "jobId" in payload: 
+        if not data.get("jobId"):
             # Check if the request contains a jobId (user is checking job status)
             job_id = payload.jobId
             jsond = await env.itinerarykv.get(f"job_{job_id}")
