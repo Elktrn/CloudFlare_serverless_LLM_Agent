@@ -33,7 +33,7 @@ async def on_fetch(request, env):
                 await env.itinerarykv.put(f"job_{job_id}", json_data)
                 
                 ite=[]
-                for i in range(1,payload.get("durationDays")+1):
+                for i in range(1,payload.durationDays+1):
                     ite.append({"day":i,"theme":"FILL","activities":[{"time":"morning","description":"FILL","location":"FILL"},{"time":"afternoon","description":"FILL","location":"FILL"},{"time":"evening","description":"FILL","location":"FILL"}]})
 
                 env.fetch(
