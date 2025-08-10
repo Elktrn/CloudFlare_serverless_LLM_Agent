@@ -41,7 +41,7 @@ async def on_fetch(request, env,ctx):
                     # Use ctx.waitUntil to ensure the background task completes
                     background_task = fetch(api_url,method="POST",body= json.dumps({"jobId": job_id,"iten": str(fabricated_itinerary)}))
                     
-                    ctx.wait_until(background_task)
+                    # ctx.wait_until(background_task)
 
                     # env.fetch(
                     #         "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
