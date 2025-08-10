@@ -7,7 +7,7 @@ async def on_fetch(request, env,ctx):
     if request.method == "POST":
         payload = await request.json()
         try:
-            if payload.get("jobId"):
+            if payload.jobId !=None:
                 # Check if the request contains a jobId (user is checking job status)
                 job_id = payload.jobId
                 jsond = await env.itinerarykv.get(f"job_{job_id}")
