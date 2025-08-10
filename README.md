@@ -45,8 +45,8 @@ for i in range(1, dd+1):
         ]
     })
 
-url = 'https://agentic-llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/'
-payload = {'jobId': 'c63dda07-8ed5-4239-9330-042bd9e5851c', 'iten': ite}
+url = 'https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/'
+payload = {'jobId': 'c63dda07-8ed5-4239-9330-042bd9e5851c', 'iten': str(ite)}
 r = requests.post(url=url, json=payload)
 if r.status_code == 202:
     print(r.json())
