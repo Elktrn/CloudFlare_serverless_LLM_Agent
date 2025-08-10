@@ -10,13 +10,12 @@ async def on_fetch(request, env,ctx):
             # Check if the request contains a jobId (user is checking job status)
             job_id = payload.jobId
             jsond = await env.itinerarykv.get(f"job_{job_id}")
-            # parsed_data =json.loads(jsond)
             return Response(json.dumps(jsond), status=202)
         except Exception as e:
             try:
                 # No jobId, so register a new job
 
-                    job_id = await str(uuid.uuid4())
+                    job_id = str(uuid.uuid4())
                     
                     # Register job in KV storage
                     processed_data = {
@@ -29,7 +28,7 @@ async def on_fetch(request, env,ctx):
                         "itinerary": "null",
                         "error": "null"
                     }
-                    json_data =await json.dumps(processed_data)
+                    json_data = json.dumps(processed_data)
                     await env.itinerarykv.put(f"job_{job_id}", json_data)
                     
                     ite=[]
@@ -53,12 +52,11 @@ async def on_fetch(request, env,ctx):
                     
                     ctx.wait_until(background_task)
 
-
                     # env.fetch(
                     #         "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
                     #         method="POST",
                     #         body={"jobId": job_id,"iten":str(ite)})
-                    pd =await json.loads(processed_data)
+                    pd =json.loads(processed_data)
                     return Response(json.dumps(pd), status=202)
             except Exception as e:
                 error_data = {"error": f"Failed to process POST request: {str(e)}"}
