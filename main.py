@@ -31,9 +31,9 @@ async def on_fetch(request, env,ctx):
                     json_data = json.dumps(processed_data)
                     await env.itinerarykv.put(f"job_{job_id}", json_data)
                     
-                    ite=[]
+                    fabricated_itinerary=[]
                     for i in range(1,payload.durationDays+1):
-                        ite.append({"day":i,"theme":"FILL","activities":[{"time":"morning","description":"FILL","location":"FILL"},{"time":"afternoon","description":"FILL","location":"FILL"},{"time":"evening","description":"FILL","location":"FILL"}]})
+                        fabricated_itinerary.append({"day":i,"theme":"FILL","activities":[{"time":"morning","description":"FILL","location":"FILL"},{"time":"afternoon","description":"FILL","location":"FILL"},{"time":"evening","description":"FILL","location":"FILL"}]})
 
                                     # Use ctx.waitUntil to ensure the background task completes
                     background_task = fetch(
@@ -45,7 +45,7 @@ async def on_fetch(request, env,ctx):
                             },
                             "body": json.dumps({
                                 "jobId": job_id,
-                                "iten": ite
+                                "iten": str(fabricated_itinerary)
                             })
                         }
                     )
