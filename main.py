@@ -2,7 +2,6 @@ from workers import Response,fetch
 import json
 import uuid
 import datetime
-import aiohttp
 
 async def on_fetch(request, env,ctx):
     if request.method == "POST":
