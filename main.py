@@ -36,21 +36,21 @@ async def on_fetch(request, env,ctx):
                         fabricated_itinerary.append({"day":i,"theme":"FILL","activities":[{"time":"morning","description":"FILL","location":"FILL"},{"time":"afternoon","description":"FILL","location":"FILL"},{"time":"evening","description":"FILL","location":"FILL"}]})
 
                                     # Use ctx.waitUntil to ensure the background task completes
-                    background_task = fetch(
-                        "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
-                        {
-                            "method": "POST",
-                            "headers": {
-                                "Content-Type": "application/json"
-                            },
-                            "body": json.dumps({
-                                "jobId": job_id,
-                                "iten": str(fabricated_itinerary)
-                            })
-                        }
-                    )
+                    # background_task = fetch(
+                    #     "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
+                    #     {
+                    #         "method": "POST",
+                    #         "headers": {
+                    #             "Content-Type": "application/json"
+                    #         },
+                    #         "body": json.dumps({
+                    #             "jobId": job_id,
+                    #             "iten": str(fabricated_itinerary)
+                    #         })
+                    #     }
+                    # )
                     
-                    ctx.wait_until(background_task)
+                    # ctx.wait_until(background_task)
 
                     # env.fetch(
                     #         "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
