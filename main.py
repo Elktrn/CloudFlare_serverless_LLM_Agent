@@ -28,12 +28,12 @@ async def on_fetch(request, env,ctx):
                         "itinerary": "null",
                         "error": "null"
                     }
-                    # json_data = json.dumps(processed_data)
-                    # await env.itinerarykv.put(f"job_{job_id}", json_data)
+                    json_data = json.dumps(processed_data)
+                    await env.itinerarykv.put(f"job_{job_id}", json_data)
                     
-                    # fabricated_itinerary=[]
-                    # for i in range(1,payload.durationDays+1):
-                    #     fabricated_itinerary.append({"day":i,"theme":"FILL","activities":[{"time":"morning","description":"FILL","location":"FILL"},{"time":"afternoon","description":"FILL","location":"FILL"},{"time":"evening","description":"FILL","location":"FILL"}]})
+                    fabricated_itinerary=[]
+                    for i in range(1,payload.durationDays+1):
+                        fabricated_itinerary.append({"day":i,"theme":"FILL","activities":[{"time":"morning","description":"FILL","location":"FILL"},{"time":"afternoon","description":"FILL","location":"FILL"},{"time":"evening","description":"FILL","location":"FILL"}]})
 
                                     # Use ctx.waitUntil to ensure the background task completes
                     # background_task = fetch(
