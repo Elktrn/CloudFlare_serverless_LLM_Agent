@@ -1,5 +1,5 @@
 {
-  "name": "llm_itinerary_generator",
+  "name": "agentic-llm-itinerary-generator",
   "main": "main.py",
   "compatibility_flags": [
     "python_workers"
