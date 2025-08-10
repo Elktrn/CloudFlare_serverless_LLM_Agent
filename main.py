@@ -56,7 +56,7 @@ async def on_fetch(request, env,ctx):
                     #         "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
                     #         method="POST",
                     #         body={"jobId": job_id,"iten":str(ite)})
-                    pd =json.loads(processed_data)
+                    # pd =json.loads(processed_data)
                     return Response(json.dumps(pd), status=202)
             except Exception as e:
                 error_data = {"error": f"Failed to process POST request: {str(e)}"}
