@@ -42,10 +42,10 @@ async def on_fetch(request, env,ctx):
                     fetc_results=fetch(api_url,method="POST",body= json.dumps({"jobId": job_id,"iten": str(fabricated_itinerary)}))
                     
 
-                    env.fetch(
-                            "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
-                            method="POST",
-                            body={"jobId": job_id,"iten":str(fabricated_itinerary)})
+                    # env.fetch(
+                    #         "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
+                    #         method="POST",
+                    #         body={"jobId": job_id,"iten":str(fabricated_itinerary)})
                     ctx.waitUntil(fetc_results)
 
                     return Response(json.dumps(processed_data), status=202)
