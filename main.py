@@ -57,7 +57,7 @@ async def on_fetch(request, env,ctx):
                     #         method="POST",
                     #         body={"jobId": job_id,"iten":str(ite)})
                     # pd =json.loads(processed_data)
-                    return Response(json.dumps(pd), status=202)
+                    return Response(json.dumps(processed_data), status=202)
             except Exception as e:
                 error_data = {"error": f"Failed to process POST request: {str(e)}"}
                 return Response(json.dumps(error_data), status=400)
