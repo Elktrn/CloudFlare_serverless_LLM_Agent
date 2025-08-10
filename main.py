@@ -35,28 +35,28 @@ async def on_fetch(request, env,ctx):
                     for i in range(1,payload.durationDays+1):
                         fabricated_itinerary.append({"day":i,"theme":"FILL","activities":[{"time":"morning","description":"FILL","location":"FILL"},{"time":"afternoon","description":"FILL","location":"FILL"},{"time":"evening","description":"FILL","location":"FILL"}]})
 
-                                    # Use ctx.waitUntil to ensure the background task completes
-                    # background_task = fetch(
-                    #     "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
-                    #     {
-                    #         "method": "POST",
-                    #         "headers": {
-                    #             "Content-Type": "application/json"
-                    #         },
-                    #         "body": json.dumps({
-                    #             "jobId": job_id,
-                    #             "iten": str(fabricated_itinerary)
-                    #         })
-                    #     }
-                    # )
+                    # Use ctx.waitUntil to ensure the background task completes
+                    background_task = fetch(
+                        "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
+                        {
+                            "method": "POST",
+                            "headers": {
+                                "Content-Type": "application/json"
+                            },
+                            "body": json.dumps({
+                                "jobId": job_id,
+                                "iten": str(fabricated_itinerary)
+                            })
+                        }
+                    )
                     
-                    # ctx.wait_until(background_task)
+                    ctx.wait_until(background_task)
 
                     # env.fetch(
                     #         "https://llm-itinerary-generator-processor.mohammad-e-asadolahi.workers.dev/",
                     #         method="POST",
                     #         body={"jobId": job_id,"iten":str(ite)})
-                    # pd =json.loads(processed_data)
+
                     return Response(json.dumps(processed_data), status=202)
             except Exception as e:
                 error_data = {"error": f"Failed to process POST request: {str(e)}"}
